@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class TCPClient {
 
     public static void main(String[] args) {
-
+        dataEntry();
     }// end of main method
 
     public static void dataEntry() {
@@ -15,24 +15,27 @@ public class TCPClient {
 
         while (isNext) {
 
-            String name;
-            String address;
-            String phone;
+            try {
+                InputStreamReader is = new InputStreamReader(System.in);
+                BufferedReader input = new BufferedReader(is);
 
-            Scanner input = new Scanner(System.in);
+                System.out.println("Enter name for member number:");
+                String name = input.readLine();
+                System.out.println("Enter address for member number:");
+                String address = input.readLine();
+                System.out.println("Enter phone for member number:");
+                String phone = input.readLine();
+                System.out.println("would you like to enter details for another member?: Type 'n' to exit or anyother key to continue");
+                String cont = input.readLine();
+                cont = cont.toLowerCase();
+                System.out.println(cont);
+                if (cont.equals("n")) {
+                isNext = false;
+            }
 
-            System.out.println("Enter name for member number:");
-            name = input.nextLine();
-            System.out.println("Enter address for member number:");
-            address = input.nextLine();
-            System.out.println("Enter phone for member number:");
-            phone = input.nextLine();
-            System.out.println("would you like to enter details for another member?: y or n?");
-            String cont = input.nextLine();
-            System.out.println(cont);
-
-            if (cont.equals("n")) {
-                break;
+            
+            }catch(IOException e){
+                e.printStackTrace();
             }
 
         }

@@ -1,8 +1,10 @@
 
 package com.coit13229ass1;
 
+import java.io.Serializable;
 
-public class Member {
+
+public class Member implements Serializable{
     private String name;
     private String adress;
     private String phone;
