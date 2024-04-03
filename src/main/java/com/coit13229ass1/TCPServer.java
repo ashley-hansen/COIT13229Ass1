@@ -51,26 +51,42 @@ class Connection extends Thread {
         String name;
         String address;
         String phone;
+        String line;
+        ArrayList<Member>memberList = new ArrayList<Member>();
 
         try {
-            File memberFile = new File("memberlist.txt");
-            PrintStream writer = new PrintStream(memberFile);
+            //Create file and writer opbject
+            FileWriter memberFile = new FileWriter("memberlist.txt", true);
+            BufferedWriter writer = new BufferedWriter(memberFile);
             Member member1 = (Member) input.readObject();
-
+            FileReader fileReader = new FileReader("memberlist.txt");
+            BufferedReader reader = new BufferedReader(fileReader);
+                    
+            //Writes to text file
             name = member1.getName();
-            writer.println(name);
+            writer.write(name);
+            writer.newLine();
             address = member1.getAdress();
-            writer.println(address);
+            writer.write(address);
+            writer.newLine();
             phone = member1.getPhone();
-            writer.println(phone);
-            ArrayList<Member> memberList = new ArrayList<Member>();
-
-            memberList.add(new Member(name, address, phone));
-            for (int i = 0; i < memberList.size(); i++) {
-                System.out.println(memberList.size());
-            }
-
-//            output.writeObject(member1);
+            writer.write(phone);
+            writer.newLine();
+            writer.flush();
+            writer.close();
+            
+            //send member name back to client for feedback
+            output.writeObject(member1);
+            line = reader.readLine();
+//            while(line != null){
+//                name = line;
+//                address = line;
+//                phone = line;
+//                System.out.println(name+" "+address+" "+phone);
+//            }
+            
+            
+            
         } catch (IOException e) {
             System.out.println("IOException" + e.getMessage());
         } catch (ClassNotFoundException e) {

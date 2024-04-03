@@ -19,8 +19,9 @@ public class TCPClient {
 
         try {
             int serverPort = 8000;
-            s = new Socket("localhost", serverPort);
             while (moreMembers) {
+            s = new Socket("localhost", serverPort);
+            
                 ObjectInputStream in = null;
                 ObjectOutputStream out = null;
 
