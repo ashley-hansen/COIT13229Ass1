@@ -52,7 +52,8 @@ class Connection extends Thread {
         String address;
         String phone;
         String line;
-        ArrayList<Member>memberList = new ArrayList<Member>();
+        ArrayList<Member> memberList = new ArrayList<Member>();
+        ArrayList<String>list = new ArrayList<String>();
 
         try {
             //Create file and writer opbject
@@ -61,7 +62,7 @@ class Connection extends Thread {
             Member member1 = (Member) input.readObject();
             FileReader fileReader = new FileReader("memberlist.txt");
             BufferedReader reader = new BufferedReader(fileReader);
-                    
+
             //Writes to text file
             name = member1.getName();
             writer.write(name);
@@ -74,19 +75,27 @@ class Connection extends Thread {
             writer.newLine();
             writer.flush();
             writer.close();
-            
+
             //send member name back to client for feedback
             output.writeObject(member1);
-            line = reader.readLine();
-//            while(line != null){
-//                name = line;
-//                address = line;
-//                phone = line;
-//                System.out.println(name+" "+address+" "+phone);
-//            }
             
+            while((line = reader.readLine()) != null){
+               list.add(line);
+                
+            }
+            reader.close();
             
-            
+            System.out.println("printing array list");
+            for (int i = 0; i < list.size()-1; i++){
+                name= list.get(i);
+                address = list.get(i+1);
+                phone = list.get(i+2);
+                
+                memberList.add(new Member(name, address, phone));
+                System.out.println(memberList.get(i));
+                
+            }
+
         } catch (IOException e) {
             System.out.println("IOException" + e.getMessage());
         } catch (ClassNotFoundException e) {
