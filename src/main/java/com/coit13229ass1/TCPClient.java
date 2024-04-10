@@ -18,7 +18,7 @@ public class TCPClient {
         Scanner input = new Scanner(System.in);
 
         try {
-            int serverPort = 8000;
+            int serverPort = 1176;
             while (moreMembers) {
             s = new Socket("localhost", serverPort);
             
@@ -54,6 +54,8 @@ public class TCPClient {
                     System.out.println("Thank you for using the member management system.");
                     moreMembers = false;
                 }
+                
+                
             }
         } catch (IOException ex) {
             Logger.getLogger(TCPClient.class.getName()).log(Level.SEVERE, null, ex);

@@ -10,41 +10,42 @@ public class TCPServer {
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
         try {
-            int serverPort = 8000;
+            //Set Socket port number
+            int serverPort = 1176;
             ServerSocket listenSocket = new ServerSocket(serverPort);
-
+            //create connection object utilising thread for multiple concurrent connections
             while (true) {
                 Socket clientSocket = listenSocket.accept();
-                Connection c = new Connection(clientSocket);
+                ClientConnection connection = new ClientConnection(clientSocket);
             }
 
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }//End Main method
 
 }//End of class
 
-class Connection extends Thread {
-
+class ClientConnection extends Thread {
+    //initialise in and out data streams
     ObjectInputStream input;
     ObjectOutputStream output;
     Socket clientSocket;
 
-    public Connection(Socket aClientSocket) {
+    public ClientConnection(Socket aClientSocket) {
 
         try {
             clientSocket = aClientSocket;
             input = new ObjectInputStream(clientSocket.getInputStream());
             output = new ObjectOutputStream(clientSocket.getOutputStream());
-
+            //starts server thread
             this.start();
         } catch (IOException e) {
             System.out.println("Connection:" + e.getMessage());
         }
 
     }
-
+    //run method starts thread
     public void run() {
 
         boolean running = true;
@@ -83,19 +84,26 @@ class Connection extends Thread {
                list.add(line);
                 
             }
-            reader.close();
+            reader.close(); //Closes reader
             
-            System.out.println("printing array list");
-            for (int i = 0; i < list.size()-1; i++){
+            System.out.println("printing array list"); //adds all lines of textfile to a array list of strings used
+            for (int i = 0; i < list.size(); i = i+3){   //to assign to string variable to parss in arrylist objects
                 name= list.get(i);
                 address = list.get(i+1);
                 phone = list.get(i+2);
                 
                 memberList.add(new Member(name, address, phone));
-                System.out.println(memberList.get(i));
-                
+                                
             }
-
+            // prints array list of objects for verification.
+            for (int i = 0; i < memberList.size();i++){
+                System.out.println(memberList.get(i));
+            }
+            // serialise arraylist objects
+             FileOutputStream fileOut = new FileOutputStream("memberlistObject");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(memberList);
+                
         } catch (IOException e) {
             System.out.println("IOException" + e.getMessage());
         } catch (ClassNotFoundException e) {
