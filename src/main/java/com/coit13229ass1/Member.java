@@ -44,7 +44,7 @@ public class Member implements Serializable{
 
     @Override
     public String toString() {
-        return "Member{" + "name=" + name + ", adress=" + adress + ", phone=" + phone + '}';
+        return String.format("%-20s%-50s%s",name, adress,phone);
     }
     
     
