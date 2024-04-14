@@ -49,8 +49,8 @@ public class UDPServer {
             sendBuffer = str.getBytes();
             DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, address, portNum);
             serverSocket.send(sendPacket);//send the list message
-            //clost if message recieved is equal to bye
-            if (clientMessage.equalsIgnoreCase("bye")) {
+            //close if message recieved is equal to bye
+            if (clientMessage.equalsIgnoreCase("close")) {
                 System.out.println("Connection ended by server");
                 break;
             }

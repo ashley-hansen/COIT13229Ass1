@@ -86,7 +86,7 @@ class ClientConnection extends Thread {
             }
             reader.close(); //Closes reader
             
-            System.out.println("printing array list"); //adds all lines of textfile to a array list of strings used
+            System.out.println("New member recieved printing member list"); //adds all lines of textfile to a array list of strings used
             for (int i = 0; i < list.size(); i = i+3){   //to assign to string variable to parss in arrylist objects
                 name= list.get(i);
                 address = list.get(i+1);
